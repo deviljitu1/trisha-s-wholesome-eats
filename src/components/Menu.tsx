@@ -228,21 +228,23 @@ const Menu = () => {
           </p>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {menuData.map((category, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveCategory(index)}
-              className={`px-3 md:px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCategory === index
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
+        {/* Category Tabs - Horizontal scroll on mobile */}
+        <div className="overflow-x-auto pb-2 -mx-4 px-4 mb-8 md:mb-12">
+          <div className="flex md:flex-wrap md:justify-center gap-2 min-w-max md:min-w-0">
+            {menuData.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveCategory(index)}
+                className={`px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
+                  activeCategory === index
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground border border-border"
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Menu Items */}
@@ -256,12 +258,12 @@ const Menu = () => {
             )}
           </div>
 
-          {/* Grid Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Grid Layout - 2 cols on mobile, scales up */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
             {menuData[activeCategory].items.map((item, index) => (
               <div
                 key={index}
-                className="bg-card rounded-xl overflow-hidden hover:shadow-lg transition-shadow group"
+                className="bg-card rounded-lg md:rounded-xl overflow-hidden hover:shadow-lg transition-shadow group border border-border"
               >
                 {/* Image */}
                 <div className="aspect-square overflow-hidden bg-muted">
@@ -273,23 +275,21 @@ const Menu = () => {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-accent/50">
-                      <span className="text-4xl">🍽️</span>
+                      <span className="text-3xl md:text-4xl">🍽️</span>
                     </div>
                   )}
                 </div>
                 
                 {/* Content */}
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-2">
-                    <h4 className="font-medium text-foreground leading-tight">
-                      {item.name}
-                    </h4>
-                    <span className="font-serif text-lg font-bold text-primary whitespace-nowrap">
-                      ₹{item.price}
-                    </span>
-                  </div>
+                <div className="p-2 md:p-4">
+                  <h4 className="font-medium text-foreground leading-tight text-xs md:text-sm line-clamp-2">
+                    {item.name}
+                  </h4>
+                  <span className="font-serif text-sm md:text-lg font-bold text-primary mt-1 block">
+                    ₹{item.price}
+                  </span>
                   {item.info && (
-                    <p className="text-xs text-muted-foreground mt-2">
+                    <p className="text-[10px] md:text-xs text-muted-foreground mt-1 line-clamp-2">
                       {item.info}
                     </p>
                   )}
